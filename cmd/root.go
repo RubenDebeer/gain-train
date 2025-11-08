@@ -9,11 +9,26 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gain-train",
-	Short: "A command-line tool to log and track your workouts, monitor progress over time, and keep you accountable to your training goals  ",
-	Long:  `I Don't know I will need to thing about it...`,
+	Short: "Your personal fitness companion for tracking workouts and achieving training goals",
+	Long: `Gain Train is a powerful command-line fitness tracker that helps you:
+
+	Create and manage custom workout routines
+	Track your exercise progress over time  
+	Build consistent training habits
+	Stay accountable to your fitness goals
+
+	Whether you're a beginner starting your fitness journey or an experienced athlete 
+	optimizing your training, Gain Train provides the tools you need to log workouts,
+	monitor your progress, and achieve your personal fitness milestones. Awe get on 
+	the Gain Train Choo Choo......
+
+	Get started by creating your first workout:
+	gain-train workouts create
+
+	View all available commands:
+	gain-train help`,
 }
 
 func Execute() {

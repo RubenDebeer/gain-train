@@ -39,13 +39,13 @@ func PromptConfirm(prompt string) bool {
 }
 
 func PrintSuccess(message string) {
-	fmt.Printf("✅ %s\n", message)
+	fmt.Printf("Yeah Babby!!! %s\n", message)
 }
 
 func PrintError(message string) {
-	fmt.Printf("❌ %s\n", message)
+	fmt.Printf("Nah Bru...! %s\n", message)
 }
 
 func PrintInfo(message string) {
-	fmt.Printf("ℹ️  %s\n", message)
+	fmt.Printf("FYI %s\n", message)
 }

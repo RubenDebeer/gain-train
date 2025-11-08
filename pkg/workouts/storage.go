@@ -23,6 +23,7 @@ func NewJSONStorage() *JSONStorage {
 		filePath: filepath.Join(dataDir, "workouts.json"),
 	}
 }
+
 func (js *JSONStorage) Create(workout *Workout) error {
 	// Generate ID and timestamps
 	workout.ID = uuid.New().String()
@@ -94,7 +95,7 @@ func (js *JSONStorage) loadWorkouts() ([]Workout, error) {
 	var workouts []Workout
 
 	if _, err := os.Stat(js.filePath); os.IsNotExist(err) {
-		return workouts, nil // Return empty slice if file doesn't exist
+		return workouts, nil
 	}
 
 	data, err := os.ReadFile(js.filePath)
@@ -103,7 +104,7 @@ func (js *JSONStorage) loadWorkouts() ([]Workout, error) {
 	}
 
 	if len(data) == 0 {
-		return workouts, nil // Return empty slice if file is empty
+		return workouts, nil
 	}
 
 	err = json.Unmarshal(data, &workouts)

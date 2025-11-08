@@ -14,8 +14,17 @@ import (
 var workoutsCmd = &cobra.Command{
 	Use:     "workouts",
 	Aliases: []string{"w"},
-	Short:   "Manage your workouts",
-	Long:    "Manage your workouts with add, list, update, and remove operations.",
+	Short:   "Manage your workout routines and training sessions",
+	Long: `Create, view, modify, and organize your workout routines.
+
+	The workouts command provides complete management of your training sessions,
+	allowing you to build custom routines, track your exercises, and maintain
+	a consistent training schedule.
+
+	Examples:
+	gain-train workouts add     # Create a new workout routine
+	gain-train workouts list    # View all your workouts
+	gain-train workouts remove  # Delete a workout routine`,
 }
 
 var createWorkoutCmd = &cobra.Command{
@@ -65,6 +74,7 @@ func createWorkoutHandler(cmd *cobra.Command, args []string) {
 	storage := workouts.NewJSONStorage()
 
 	name := ui.PromptString("Enter workout name")
+
 	description := ui.PromptString("Enter workout description (optional)")
 
 	workout := &workouts.Workout{
@@ -73,7 +83,6 @@ func createWorkoutHandler(cmd *cobra.Command, args []string) {
 		Exercises:   []workouts.Exercise{},
 	}
 
-	// Add exercises
 	for {
 		if ui.PromptConfirm("Add an exercise to this workout?") {
 			exercise := createExercise()
@@ -83,23 +92,23 @@ func createWorkoutHandler(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	// Save workout
-	if err := storage.Create(workout); err != nil {
-		ui.PrintError(fmt.Sprintf("Failed to create workout: %v", err))
+	createError := storage.Create(workout)
+
+	if createError != nil {
+		ui.PrintError(fmt.Sprintf("Failed to create workout: %v", createError))
 		return
 	}
 
 	ui.PrintSuccess(fmt.Sprintf("Workout '%s' created successfully!", workout.Name))
 }
 
-// Helper function to create an exercise
 func createExercise() workouts.Exercise {
 	ui.PrintInfo("Adding new exercise...")
 
 	name := ui.PromptString("Exercise name")
 	sets := ui.PromptInt("Number of sets")
 	reps := ui.PromptInt("Number of reps per set")
-	weight := ui.PromptInt("Weight (kg)")
+	weight := ui.PromptInt("Weight(kg)")
 	restTime := ui.PromptInt("Rest time between sets (seconds)")
 	description := ui.PromptString("Exercise notes (optional)")
 
@@ -113,7 +122,6 @@ func createExercise() workouts.Exercise {
 	}
 }
 
-// List all Workouts
 func listWorkoutsHandler(cmd *cobra.Command, args []string) {
 	storage := workouts.NewJSONStorage()
 
@@ -128,7 +136,7 @@ func listWorkoutsHandler(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	fmt.Println("\n📋 Your Workouts:")
+	fmt.Println("\n Your Workouts:")
 	fmt.Println("================")
 
 	for i, workout := range workoutList {
@@ -141,19 +149,17 @@ func listWorkoutsHandler(cmd *cobra.Command, args []string) {
 
 		// Show exercises
 		for j, exercise := range workout.Exercises {
-			fmt.Printf("     %d. %s - %d sets x %d reps @ %d lbs\n",
+			fmt.Printf("     %d. %s - %d sets x %d reps @ %d kg\n",
 				j+1, exercise.Name, exercise.Sets, exercise.Reps, exercise.Weight)
 		}
 	}
 }
 
-// Updates a workout
 func updateWorkoutHandler(cmd *cobra.Command, args []string) {
 	fmt.Println("Updating a workout...")
 	// TODO: Implement update workout logic
 }
 
-// Removes a Workout
 func removeWorkoutHandler(cmd *cobra.Command, args []string) {
 	storage := workouts.NewJSONStorage()
 
