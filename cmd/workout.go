@@ -11,6 +11,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// workouts
 var workoutsCmd = &cobra.Command{
 	Use:     "workouts",
 	Aliases: []string{"w"},
@@ -27,6 +28,7 @@ var workoutsCmd = &cobra.Command{
 	gain-train workouts remove  # Delete a workout routine`,
 }
 
+// workouts create
 var createWorkoutCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create a new workout",
@@ -34,6 +36,7 @@ var createWorkoutCmd = &cobra.Command{
 	Run:   createWorkoutHandler,
 }
 
+// workouts list
 var listWorkoutsCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all workouts",
@@ -41,6 +44,7 @@ var listWorkoutsCmd = &cobra.Command{
 	Run:   listWorkoutsHandler,
 }
 
+// workouts update
 var updateWorkoutCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update a workout",
@@ -48,6 +52,7 @@ var updateWorkoutCmd = &cobra.Command{
 	Run:   updateWorkoutHandler,
 }
 
+// workouts remove
 var removeWorkoutCmd = &cobra.Command{
 	Use:   "remove",
 	Short: "Remove a workout",
@@ -69,14 +74,13 @@ func initWorkoutCmd() {
 
 func createWorkoutHandler(cmd *cobra.Command, args []string) {
 
-	ui.PrintInfo("Creating a new workout...")
+	ui.PrintInfo("Yes Bro let's Create a new workout!!!💪")
 
-	storage := workouts.NewJSONStorage()
+	storage := workouts.NewJSONStorage() // This Should Be The API Call Instead
 
+	// Populate Workout Details
 	name := ui.PromptString("Enter workout name")
-
 	description := ui.PromptString("Enter workout description (optional)")
-
 	workout := &workouts.Workout{
 		Name:        name,
 		Description: description,

@@ -25,15 +25,15 @@ func NewJSONStorage() *JSONStorage {
 }
 
 func (js *JSONStorage) Create(workout *Workout) error {
-	// Generate ID and timestamps
 	workout.ID = uuid.New().String()
 	workout.CreatedAt = time.Now()
 	workout.UpdatedAt = time.Now()
 
+	// Loads all of the workouts
 	workouts, err := js.loadWorkouts()
 	if err != nil {
 		return err
-	}
+	} // If there is an error retun error
 
 	workouts = append(workouts, *workout)
 	return js.saveWorkouts(workouts)

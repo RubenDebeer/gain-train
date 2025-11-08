@@ -28,12 +28,15 @@ func PromptInt(prompt string) int {
 func PromptConfirm(prompt string) bool {
 	for {
 		input := strings.ToLower(PromptString(prompt + " (y/n)"))
+
 		if input == "y" || input == "yes" {
 			return true
 		}
+
 		if input == "n" || input == "no" {
 			return false
 		}
+
 		fmt.Println("Please enter 'y' for yes or 'n' for no.")
 	}
 }
